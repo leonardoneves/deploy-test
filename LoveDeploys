@@ -3,36 +3,35 @@ pipeline:
   - name: 'my first pipeline'
   - author: 'Leo'
   - email: 'leo@...'
-  # Stages
-    - stages:
-      build:
-        - name: 'Building Step'
-        - docker: 'gradlew build --no daemon'
-        - artifact: 'dist/artifato.zip'
-      test:
-        - name: 'Test Step'
-        - shell: 'junit blah blah blah'
-      build_docker_image:
-        - name: 'Build docker image from the code'
-        - destination: 'docker'
-        - action: build
-        - tag: "my-image"
-      push_docker_image:
-        - name: 'Push docker image to dockerhub'
-        - destination: 'dockerhub'
-        - action: push
-        - tag: "my-image"
-     deploy:
-        - name: 'Deployment of the code'
-        - destination: 'kubernetes'
-        - on_branch: 'qa'
-          status: 'success'
-            - email:
-              to: 'QA employees'
-              subject: "Deployed to QA, Take a look on ${url_deploy}: Deploy URL: ${deploy_id_url}"
-        - on_branch: 'master'
-          input: 'Deploy?'
-          action: 'stop_on_no'
-          slack:
-            - channel_id: 'managers fodoes'
-            - subject: "Deploy waiting for aproval. Click here: ${deploy_id_url}"
+  - stages:
+    build:
+      - name: 'Building Step'
+      - docker: 'gradlew build --no daemon'
+      - artifact: 'dist/artifato.zip'
+    test:
+      - name: 'Test Step'
+      - shell: 'junit blah blah blah'
+    build_docker_image:
+      - name: 'Build docker image from the code'
+      - destination: 'docker'
+      - action: build
+      - tag: "my-image"
+    push_docker_image:
+      - name: 'Push docker image to dockerhub'
+      - destination: 'dockerhub'
+      - action: push
+      - tag: "my-image"
+    deploy:
+      - name: 'Deployment of the code'
+      - destination: 'kubernetes'
+      - on_branch: 'qa'
+        status: 'success'
+        email:
+          to: 'QA employees'
+          subject: "Deployed to QA, Take a look on ${url_deploy}: Deploy URL: ${deploy_id_url}"
+      - on_branch: 'master'
+        input: 'Deploy?'
+        action: 'stop_on_no'
+        slack:
+          - channel_id: 'managers fodoes'
+          - subject: "Deploy waiting for aproval. Click here: ${deploy_id_url}"
