@@ -1,8 +1,9 @@
 ---
 pipeline:
-  - name: 'my first pipeline'
-  - author: 'Leo'
-  - email: 'leo@...'
+  - metadata:
+    name: 'my first pipeline'
+    author: 'Leo'
+    email: 'leo@...'
   - stages:
     build_docker_image:
       - name: 'Build docker image from the code'
