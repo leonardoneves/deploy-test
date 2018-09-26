@@ -4,6 +4,11 @@ pipeline:
   - author: 'Leo'
   - email: 'leo@...'
   - stages:
+    build_docker_image:
+      - name: 'Build docker image from the code'
+      - destination: 'docker'
+      - action: build
+      - tag: "my-image"
     build:
       - name: 'Building Step'
       - docker: 'gradlew build --no daemon'
@@ -11,11 +16,6 @@ pipeline:
     test:
       - name: 'Test Step'
       - shell: 'junit blah blah blah'
-    build_docker_image:
-      - name: 'Build docker image from the code'
-      - destination: 'docker'
-      - action: build
-      - tag: "my-image"
     push_docker_image:
       - name: 'Push docker image to dockerhub'
       - destination: 'dockerhub'
